@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~8.0.3",
     "@angular/router": "~8.0.3",
     "@ngrx/effects": "^8.0.1",
+    "@ngrx/entity": "^8.1.0",
     "@ngrx/store": "^8.0.1",
     "@ngrx/store-devtools": "^8.0.1",
     "angular-in-memory-web-api": "^0.8.0",

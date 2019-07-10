@@ -1,12 +1,13 @@
+import { PokemonState, pokemonAdapter } from './pokemon.adapter';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-
-import { PokemonState } from './pokemon.state';
 
 export const selectPokemonState = createFeatureSelector<PokemonState>(
   'pokemon'
 );
 
-export const selectAll = createSelector(
-  selectPokemonState,
-  state => Object.values(state.entities)
-);
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal
+} = pokemonAdapter.getSelectors(selectPokemonState);
