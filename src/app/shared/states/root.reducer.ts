@@ -1,3 +1,3 @@
-import { pokemonReducer } from './pokemon/pokemon.reducer';
+import { reducer as pokemonReducers } from './pokemon/pokemon.reducer';
 
-export const reducers = { pokemon: pokemonReducer };
+export const reducers = { pokemon: pokemonReducers };

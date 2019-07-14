@@ -14,7 +14,7 @@ export class PokemonService {
     return this.http.get<Pokemon[]>(environment.backendUrl);
   }
 
-  public delete(id: string): Observable<Pokemon> {
+  public delete(id: number): Observable<Pokemon> {
     return this.http.delete<Pokemon>(`${environment.backendUrl}/${id}`);
   }
 

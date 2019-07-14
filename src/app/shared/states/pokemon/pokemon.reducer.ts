@@ -1,35 +1,28 @@
-import { PokemonActionTypes, PokemonActions } from './pokemon.actions';
+import { Action, createReducer, on } from '@ngrx/store';
 import { PokemonState, pokemonAdapter } from './pokemon.adapter';
+
+import { actions as PokemonActions } from './pokemon.actions';
 
 export function pokemonInitialState(): PokemonState {
   return pokemonAdapter.getInitialState();
 }
 
-export function pokemonReducer(
-  state: PokemonState = pokemonInitialState(),
-  action: PokemonActions
-): PokemonState {
-  switch (action.type) {
-    case PokemonActionTypes.LOAD_POKEMONS_SUCCESS:
-      return pokemonAdapter.addAll(action.payload, state);
+const pokemonReducer = createReducer(
+  pokemonInitialState(),
+  on(PokemonActions.loadPokemonSuccess, (state, { pokemons }) =>
+    pokemonAdapter.addAll(pokemons, state)
+  ),
+  on(PokemonActions.addSuccess, (state, { pokemon }) =>
+    pokemonAdapter.addOne(pokemon, state)
+  ),
+  on(PokemonActions.removeSuccess, (state, { id }) =>
+    pokemonAdapter.removeOne(id, state)
+  ),
+  on(PokemonActions.updateSuccess, (state, { pokemon }) =>
+    pokemonAdapter.updateOne({ id: pokemon.id, changes: pokemon }, state)
+  )
+);
 
-    case PokemonActionTypes.ADD_SUCCESS:
-      return pokemonAdapter.addOne(action.pokemon, state);
-
-    case PokemonActionTypes.DELETE_SUCCESS:
-      return pokemonAdapter.removeOne(action.id, state);
-
-    case PokemonActionTypes.UPDATE_SUCCESS:
-      const { id } = action.pokemon;
-      return pokemonAdapter.updateOne(
-        {
-          id,
-          changes: action.pokemon
-        },
-        state
-      );
-
-    default:
-      return state;
-  }
+export function reducer(state: PokemonState | undefined, action: Action) {
+  return pokemonReducer(state, action);
 }
